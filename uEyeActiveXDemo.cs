@@ -178,12 +178,12 @@ namespace uEyeActiveXDemo_CS
             // 
             // triggerVideo
             // 
-            this.triggerVideo.Location = new System.Drawing.Point(8, 113);
+            this.triggerVideo.Location = new System.Drawing.Point(8, 120);
             this.triggerVideo.Name = "triggerVideo";
             this.triggerVideo.Size = new System.Drawing.Size(128, 24);
             this.triggerVideo.TabIndex = 1;
             this.triggerVideo.Text = "Trigger Video";
-            this.triggerVideo.Click += new System.EventHandler(this.Save_Click);
+            this.triggerVideo.Click += new System.EventHandler(this.triggerVideo_Click);
             // 
             // Properties
             // 
@@ -302,6 +302,7 @@ namespace uEyeActiveXDemo_CS
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(632, 426);
             this.Controls.Add(this.axuEyeCam);
+            this.Controls.Add(this.triggerVideo);
             this.Controls.Add(this.Direct3D);
             this.Controls.Add(this.Info3);
             this.Controls.Add(this.Info2);
