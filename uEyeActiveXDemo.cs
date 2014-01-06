@@ -156,7 +156,7 @@ namespace uEyeActiveXDemo_CS
             this.Snap.Size = new System.Drawing.Size(128, 24);
             this.Snap.TabIndex = 3;
             this.Snap.Text = "Freeze";
-            this.Snap.Click += new System.EventHandler(this.triggerVideo_Click);
+            this.Snap.Click += new System.EventHandler(this.Snap_Click);
             // 
             // CaptureImage
             // 
@@ -339,7 +339,7 @@ namespace uEyeActiveXDemo_CS
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
-			UpdateControls( );
+			UpdateControls();
 		}
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -347,12 +347,13 @@ namespace uEyeActiveXDemo_CS
 			axuEyeCam.ExitCamera();
 		}
 
-		private void UpdateControls( )
+		private void UpdateControls()
 		{
 			Save.Enabled = m_bCameraOpen;
 			CaptureImage.Enabled = m_bCameraOpen;
 			Snap.Enabled = m_bCameraOpen;
 			Properties.Enabled = m_bCameraOpen;
+		    triggerVideo.Enabled = m_bCameraOpen;
 			TriggerOff.Enabled = m_bCameraOpen;
 
             bool bTriggerSoftware = false;
