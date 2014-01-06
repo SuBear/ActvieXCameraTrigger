@@ -30,6 +30,7 @@ using System;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data;
@@ -70,6 +71,8 @@ namespace uEyeActiveXDemo_CS
 		private System.Windows.Forms.Button CaptureImage;
         private System.Windows.Forms.CheckBox Direct3D;
         private AxuEyeCamLib.AxuEyeCam axuEyeCam;
+
+	    private string triggerSaveFolderPath;
         		
 		/// <summary>
 		/// Erforderliche Designervariable.
@@ -295,6 +298,7 @@ namespace uEyeActiveXDemo_CS
             this.axuEyeCam.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axuEyeCam.OcxState")));
             this.axuEyeCam.Size = new System.Drawing.Size(480, 355);
             this.axuEyeCam.TabIndex = 16;
+		    this.axuEyeCam.EventOnTrigger += axuEyeCam_EventOnTrigger;
             // 
             // Form1
             // 
@@ -532,7 +536,18 @@ namespace uEyeActiveXDemo_CS
 
         private void triggerVideo_Click(object sender, System.EventArgs e)
         {
-            
+            triggerSaveFolderPath = string.Empty;
+            using (var dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Folder to save trigger";
+                dialog.ShowNewFolderButton = false;
+                dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    triggerSaveFolderPath = dialog.SelectedPath;
+                    TriggerRising.PerformClick();
+                }
+            }
         }
 
 		private void Direct3D_CheckedChanged(object sender, System.EventArgs e)
@@ -543,8 +558,8 @@ namespace uEyeActiveXDemo_CS
 
 		private void axuEyeCam_EventOnTrigger(object sender, System.EventArgs e)
 		{
+            axuEyeCam.SaveImage(triggerSaveFolderPath + "\\test" + DateTime.Now.Millisecond + ".jpg");
 		}
-
 
 		private void axuEyeCam_EventOnTransferFailed(object sender, System.EventArgs e)
 		{
@@ -562,7 +577,6 @@ namespace uEyeActiveXDemo_CS
                 m_nTransferFailedOld = m_nTransferFailed;
             }
         }
-
 
         private delegate void UpdateFPS();
         private void ShowFPS()
